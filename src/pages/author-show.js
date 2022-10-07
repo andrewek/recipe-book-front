@@ -5,7 +5,8 @@ import {
   Box,
   List,
   ListItem,
-  Breadcrumbs
+  Breadcrumbs,
+  Skeleton
 } from "@mui/material"
 
 function AuthorShow() {
@@ -30,10 +31,6 @@ function AuthorShow() {
     {variables: {id: id}}
   );
 
-  if(loading) {
-    return <p>Loading, sorry....</p>
-  }
-
   if(error) {
     return <p>Error, sorry....</p>
   }
@@ -43,16 +40,21 @@ function AuthorShow() {
       <Breadcrumbs mt={2}>
         <Link underline="hover" color="inherit" href="/">Home</Link>
         <Link underline="hover" color="inherit" href="/authors">Authors</Link>
-        <Typography color="text.primary">{data.author.name}</Typography>
+        <Typography color="text.primary">
+          {loading ? <Skeleton width={210} /> : data.author.name}
+        </Typography>
       </Breadcrumbs>
 
       <Box mt={4}>
-        <Typography variant="h3" component="h1">{data.author.name}</Typography>
+        <Typography variant="h3" component="h1">
+          {loading ? <Skeleton width={400}/> : data.author.name}
+        </Typography>
       </Box>
       <Box mt={4}>
         <Typography variant="h4" component="h2">Recipes</Typography>
         <List>
-          {data.author.recipes.map((recipe) => 
+          { loading ? <Skeleton height={400} />
+          : data.author.recipes.map((recipe) => 
             <ListItem key={recipe.id}>
               <Typography variant="body1">
                 {recipe.name} ({recipe.durationInMinutes} minutes)
