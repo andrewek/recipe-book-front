@@ -1,21 +1,18 @@
-import './App.css';
-import {React, useState} from "react";
+import {React} from "react";
+import {Route, Routes} from "react-router-dom"
+
+import HomePage from "./pages/home-page"
+import AuthorsPage from "./pages/authors-page"
+import NotFound from "./pages/errors/not-found"
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>The button has been clicked {count} times</h1>
-        <button
-          className="button"
-          onClick={() => setCount((prevCount) => prevCount + 1 ) }
-        >
-          Click Me!
-        </button>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/authors" element={<AuthorsPage />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
