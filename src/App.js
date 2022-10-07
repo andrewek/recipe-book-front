@@ -1,5 +1,12 @@
 import {React} from "react";
-import {Route, Routes} from "react-router-dom"
+import {Route, Routes, Link} from "react-router-dom"
+import {
+  Box,
+  AppBar,
+  Container,
+  Toolbar,
+  Typography
+} from "@mui/material";
 
 import HomePage from "./pages/home-page"
 import AuthorsPage from "./pages/authors-list"
@@ -18,15 +25,58 @@ function App() {
   ]
 
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/authors" element={<AuthorsPage authors={authors} />} />
-      <Route 
-        path="/authors/:id" 
-        element={<AuthorShow authors={authors} />} 
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+    <header>
+      <Box sx={{flexGrow: 1}}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{flexGrow: 1}}
+            >
+              Recipe Book
+            </Typography>
+            <Link
+              to="/authors"
+            >
+              <Typography
+                variant="body1"
+                mx={2}
+                color={"#FFF"}
+              >
+                Authors
+              </Typography>
+            </Link>
+            <Link
+              to="/recipes"
+            >
+              <Typography
+                variant="body1"
+                mx={2}
+                color={"#FFF"}
+              >
+                Recipes
+              </Typography>
+            </Link>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </header>
+    <main>
+      <Container>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/authors" element={<AuthorsPage authors={authors} />} />
+          <Route 
+            path="/authors/:id" 
+            element={<AuthorShow authors={authors} />} 
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Container>
+    </main>
+    </>
   );
 }
 
