@@ -1,4 +1,4 @@
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {gql, useQuery} from "@apollo/client";
 import {
   Typography,
@@ -6,11 +6,13 @@ import {
   List,
   ListItem,
   Breadcrumbs,
-  Skeleton
+  Skeleton,
+  Button
 } from "@mui/material"
 
 function AuthorShow() {
-  let {id} = useParams();
+  const {id} = useParams();
+  const navigate = useNavigate();
   
   const AUTHOR_QUERY = gql`
     query($id: ID!) { 
@@ -26,49 +28,68 @@ function AuthorShow() {
     }
   `
 
-  const {loading, error, data} = useQuery(
+  const { loading, error, data } = useQuery(
     AUTHOR_QUERY, 
     {variables: {id: id}}
   );
 
-  if(error) {
-    return <p>Error, sorry....</p>
+  if (error) {
+    return <Typography>Sorry, some error occurred!</Typography>
   }
+
   
-  return(
-    <>
+  return (
+    <Box mt={4}>
+      
       <Breadcrumbs mt={2}>
-        <Link underline="hover" color="inherit" href="/">Home</Link>
-        <Link underline="hover" color="inherit" href="/authors">Authors</Link>
+        <Link underline="hover" color="inherit" to="/">Home</Link>
+        <Link underline="hover" color="inherit" to="/authors">Authors</Link>
         <Typography color="text.primary">
-          {loading ? <Skeleton width={210} /> : data.author.name}
+          { loading ? <Skeleton width={210} /> : data.author.name }
         </Typography>
       </Breadcrumbs>
 
       <Box mt={4}>
         <Typography variant="h3" component="h1">
-          {loading ? <Skeleton width={400}/> : data.author.name}
+          { loading ? <Skeleton width={400}/> : data.author.name }
         </Typography>
       </Box>
+
       <Box mt={4}>
         <Typography variant="h4" component="h2">Recipes</Typography>
-        <List>
+        
+        <List dense>
           { loading ? <Skeleton height={400} />
-          : data.author.recipes.map((recipe) => 
-            <ListItem key={recipe.id}>
-              <Typography variant="body1">
-                {recipe.name} ({recipe.durationInMinutes} minutes)
-              </Typography>
-            </ListItem>
+          : data.author.recipes.length === 0 ?
+            <Typography>This author has no recipes...</Typography> :
+            data.author.recipes.map((recipe) => 
+              <ListItem key={recipe.id} >
+                <Typography variant="body1">
+                  {recipe.name} ({recipe.durationInMinutes} minutes)
+                </Typography>
+                <Button
+                  onClick={() => navigate(`/recipes/${recipe.id}`)}
+                  ml={2}
+                >
+                  Read more
+                </Button>
+              </ListItem>
           )}
         </List>
+
       </Box>
-      <Box mt={4}>
-        <Typography variant="body1">
-          <Link to=".." relative="path">Back</Link>
-        </Typography>
+
+      <Box mt={2} ml={0}>
+        <Link to=".." relative="path">
+          <Button variant="contained" mt={2}>
+            <Typography variant="body1" color="white">
+              Back
+            </Typography>
+          </Button>
+        </Link>
       </Box>
-    </>
+
+    </Box>
   );
 }
 
