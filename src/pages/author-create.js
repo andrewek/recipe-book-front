@@ -44,7 +44,7 @@ function AuthorCreate() {
       }
     }
     `
-    const [AuthorCreate, { error, data }] = useMutation(
+    const [AuthorCreate, { error }] = useMutation(
       AUTHOR_MUTATION
     );
   
