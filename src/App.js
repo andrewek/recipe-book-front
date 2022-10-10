@@ -15,6 +15,7 @@ import RecipesPage from "./pages/recipes-list"
 import RecipeShow from "./pages/recipe-show"
 import NotFound from "./pages/errors/not-found"
 import AuthorCreate from "./pages/author-create";
+import RecipeCreate from "./pages/recipe-create";
 
 function App() {
   // const authors = [
@@ -82,6 +83,7 @@ function App() {
             path="/recipes/:id"
             element={<RecipeShow /> }
           />
+          <Route exact path="/recipes/create" element={<RecipeCreate />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>

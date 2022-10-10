@@ -10,7 +10,7 @@ import {
   ListItem
 } from "@mui/material"
 
-function AuthorsPage() {
+export default function AuthorsPage() {
   const GET_AUTHORS = gql`
     query { authors { name id } }
   `;
@@ -61,5 +61,3 @@ function AuthorsPage() {
     </Box>
   )
 };
-
-export default AuthorsPage;

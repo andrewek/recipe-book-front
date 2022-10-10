@@ -6,7 +6,8 @@ import {
   Breadcrumbs,
   Skeleton,
   List,
-  ListItem
+  ListItem,
+  Button
 } from "@mui/material";
 
 export default function RecipesPage() {
@@ -14,7 +15,7 @@ export default function RecipesPage() {
     query { recipes { name id } }
   `;
 
-  const { loading, error, data } = useQuery(GET_RECIPES);
+  const { loading, error, data } = useQuery(GET_RECIPES, {fetchPolicy: "network-only"});
 
   if (error) {
     return <Typography>Sorry, some error occurred!</Typography>
@@ -51,6 +52,12 @@ export default function RecipesPage() {
         </Box>
       }
       
+      <Box my={4}>
+       <Link to="/recipes/create">
+        <Button variant="contained">Create a recipe</Button>
+       </Link>
+      </Box>
+
     </Box>
   )
 }
