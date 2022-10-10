@@ -28,7 +28,7 @@ function AuthorShow() {
     }
   `
 
-  const { loading, error, data } = useQuery(
+  const { loading, error, data: { author, author: { recipes } = {} } = {} } = useQuery(
     AUTHOR_QUERY, 
     {variables: {id: id}}
   );
@@ -36,7 +36,6 @@ function AuthorShow() {
   if (error) {
     return <Typography>Sorry, some error occurred!</Typography>
   }
-
   
   return (
     <Box mt={4}>
@@ -45,13 +44,13 @@ function AuthorShow() {
         <Link underline="hover" color="inherit" to="/">Home</Link>
         <Link underline="hover" color="inherit" to="/authors">Authors</Link>
         <Typography color="text.primary">
-          { loading ? <Skeleton width={210} /> : data.author.name }
+          { loading ? <Skeleton width={210} /> : author.name }
         </Typography>
       </Breadcrumbs>
 
       <Box mt={4}>
         <Typography variant="h3" component="h1">
-          { loading ? <Skeleton width={400}/> : data.author.name }
+          { loading ? <Skeleton width={400}/> : author.name }
         </Typography>
       </Box>
 
@@ -60,9 +59,9 @@ function AuthorShow() {
         
         <List dense>
           { loading ? <Skeleton height={400} />
-          : data.author.recipes.length === 0 ?
+          : recipes.length === 0 ?
             <Typography>This author has no recipes...</Typography> :
-            data.author.recipes.map((recipe) => 
+            recipes.map((recipe) => 
               <ListItem key={recipe.id} >
                 <Typography variant="body1">
                   {recipe.name} ({recipe.durationInMinutes} minutes)

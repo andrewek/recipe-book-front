@@ -15,7 +15,7 @@ export default function AuthorsPage() {
     query { authors { name id } }
   `;
 
-  const { loading, error, data } = useQuery(GET_AUTHORS, {fetchPolicy: "network-only"});
+  const { loading, error, data: { authors } = {} } = useQuery(GET_AUTHORS, {fetchPolicy: "network-only"});
 
   if (error) {
     return <Typography>Sorry, some error occurred!</Typography>
@@ -43,7 +43,7 @@ export default function AuthorsPage() {
 
           <List>
             {
-              data.authors.map((author) =>
+              authors.map((author) =>
                 <ListItem key={`author-${author.id}`}>
                   <a href={`/authors/${author.id}`}>
                     <Typography>{author.name}</Typography>

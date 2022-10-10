@@ -17,13 +17,13 @@ function RecipeShow() {
         name
         id
         durationInMinutes
-        author {name id}
-        category {name id}
+        author { name id }
+        category { name id }
       }
     }
   `
 
-  const { loading, error, data } = useQuery(
+  const { loading, error, data: { recipe, recipe: { author, category } = {} } = {} } = useQuery(
     RECIPE_QUERY,
     {variables: {id: id}}
   );
@@ -32,7 +32,6 @@ function RecipeShow() {
     return <Typography>Sorry, some error occurred!</Typography>
   }
 
-
   return(
     <Box mt={4}>
 
@@ -40,33 +39,33 @@ function RecipeShow() {
         <Link underline="hover" color="inherit" to="/">Home</Link>
         <Link underline="hover" color="inherit" to="/recipes">Recipes</Link>
         <Typography color="text.primary">
-          { loading ? <Skeleton width={210} /> : data.recipe.name }
+          { loading ? <Skeleton width={210} /> : recipe.name }
         </Typography>
       </Breadcrumbs>
 
       <Box mt={4}>
         <Typography my={2} variant="h3" component="h1">
-          { loading ? <Skeleton width={400}/> : data.recipe.name }
+          { loading ? <Skeleton width={400}/> : recipe.name }
         </Typography>
         
         <Typography variant="body1">
           {
             loading ? <Skeleton width={400}/> : 
-            <Typography><strong>Time to make:</strong> {data.recipe.durationInMinutes} minutes</Typography>
+            <Typography><strong>Time to make:</strong> {recipe.durationInMinutes} minutes</Typography>
           }
         </Typography>
 
         <Typography variant="body1">
           {
             loading ? <Skeleton width={400}/> :
-            <Typography><strong>Authored by:</strong> {data.recipe.author.name}</Typography>
+            <Typography><strong>Authored by:</strong> {author.name}</Typography>
           }
           </Typography>
 
         <Typography variant="body1">
           {
             loading ? <Skeleton width={400} /> :
-            <Typography><strong>Category: </strong>{data.recipe.category.name}</Typography>
+            <Typography><strong>Category: </strong>{category.name}</Typography>
           }
         </Typography>
 

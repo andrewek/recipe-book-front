@@ -30,9 +30,9 @@ function AuthorCreate() {
     });
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    AuthorCreate({ variables: author });
+    await AuthorCreate({ variables: author });
     if (!error) navigate("/authors");
   }
 
@@ -44,7 +44,7 @@ function AuthorCreate() {
       }
     }
     `
-    const [AuthorCreate, { error }] = useMutation(
+    const [AuthorCreate, { error, data }] = useMutation(
       AUTHOR_MUTATION
     );
   
