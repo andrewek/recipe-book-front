@@ -36,9 +36,9 @@ export default function RecipeCreate() {
     });
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    RecipeCreate({ variables: recipe });
+    await RecipeCreate({ variables: recipe });
     if (!error) navigate("/recipes");
   }
 

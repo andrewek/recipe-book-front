@@ -15,7 +15,7 @@ export default function RecipesPage() {
     query { recipes { name id } }
   `;
 
-  const { loading, error, data } = useQuery(GET_RECIPES, {fetchPolicy: "network-only"});
+  const { loading, error, data: { recipes } = {} } = useQuery(GET_RECIPES, {fetchPolicy: "network-only"});
 
   if (error) {
     return <Typography>Sorry, some error occurred!</Typography>
@@ -41,7 +41,7 @@ export default function RecipesPage() {
 
           <List>
             {
-              data.recipes.map((recipe) =>
+              recipes.map((recipe) =>
                 <ListItem key={`recipe-${recipe.id}`}>
                   <a href={`/recipes/${recipe.id}`}>
                     <Typography>{recipe.name}</Typography>
