@@ -6,8 +6,7 @@ import {
   Breadcrumbs,
   Button,
   FormControl,
-  Input,
-  InputLabel,
+  TextField,
 } from "@mui/material"
 import { useState } from "react";
 
@@ -86,64 +85,68 @@ export default function RecipeCreate() {
             py: "20px",
           }}
         >
-          <Input
+          <TextField
             id="name"
             name="name"
-            variant="outlined-basic"
+            variant="outlined"
+            label="Recipe Name"
+            autoComplete="off"
             onInput={handleChange}
           />
-          <InputLabel htmlFor="name">Recipe Name</InputLabel>
         </FormControl>
 
         <FormControl
           noValidate
-          autoComplete="off"
           sx={{
             width: "100%",
             py: "20px",
           }}
         >
-          <Input
+          <TextField
             id="durationInMinutes"
             name="durationInMinutes"
-            variant="outlined-basic"
+            variant="outlined"
+            label="Duration in minutes"
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            autoComplete="off"
             onInput={handleChange}
           />
-          <InputLabel htmlFor="durationInMinutes">Duration In Minutes</InputLabel>
         </FormControl>
 
         <FormControl
           noValidate
-          autoComplete="off"
           sx={{
             width: "100%",
             py: "20px",
           }}
         >
-          <Input
+          <TextField
             id="authorId"
             name="authorId"
-            variant="outlined-basic"
+            variant="outlined"
+            label="Author ID"
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            autoComplete="off"
             onInput={handleChange}
           />
-          <InputLabel htmlFor="authorId">Author ID</InputLabel>
         </FormControl>
 
         <FormControl
           noValidate
-          autoComplete="off"
           sx={{
             width: "100%",
             py: "20px",
           }}
         >
-          <Input
+          <TextField
             id="categoryId"
             name="categoryId"
-            variant="outlined-basic"
+            variant="outlined"
+            label="Category ID"
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            autoComplete="off"
             onInput={handleChange}
           />
-          <InputLabel htmlFor="categoryId">Category ID</InputLabel>
         </FormControl>
           
         <Box mt={2}>

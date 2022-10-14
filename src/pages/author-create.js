@@ -6,33 +6,32 @@ import {
   Breadcrumbs,
   Button,
   FormControl,
-  Input,
-  InputLabel,
+  TextField,
 } from "@mui/material"
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 function AuthorCreate() {
   const navigate = useNavigate();
-
 
   // ----> FORM CONTROLS.
   const initialFormState = {
     name: "",
   };
-  const [author, setAuthor] = useState({ ...initialFormState });
+  const { register, handleSubmit } = useForm({ defaultValues: { ...initialFormState }});
+  // const [author, setAuthor] = useState({ ...initialFormState });
 
-  const handleChange = ({ target }) => {
-    const { value } = target;
+  // const handleChange = ({ target }) => {
+  //   const { value } = target;
 
-    setAuthor({
-      ...author,
-      [target.name]: value
-    });
-  }
+  //   setAuthor({
+  //     ...author,
+  //     [target.name]: value
+  //   });
+  // }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await AuthorCreate({ variables: author });
+  const onSubmit = async (data) => {
+    await AuthorCreate({ variables: data });
     if (!error) navigate("/authors");
   }
 
@@ -64,26 +63,25 @@ function AuthorCreate() {
 
       <Typography my={4} variant="h4" component="h1">Sign up an author:</Typography>
 
-      <form onSubmit={handleSubmit} style={{
+      <form onSubmit={handleSubmit(onSubmit)} style={{
         border: "1px solid grey",
         borderRadius: 1,
         padding: "20px 20px"
       }}>
         <FormControl
           noValidate
-          autoComplete="off"
           sx={{
             width: "100%",
             py: "20px",
           }}
         >
-          <Input
+          <TextField {...register("name")}
             id="name"
             name="name"
-            variant="outlined-basic"
-            onInput={handleChange}
+            label="Author Name"
+            variant="outlined"
+            autoComplete="off"
           />
-          <InputLabel htmlFor="name">Author Name</InputLabel>
         </FormControl>
           
         <Box mt={2}>
